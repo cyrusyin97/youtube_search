@@ -11,7 +11,7 @@ from django.views.decorators.cache import cache_control, never_cache
 from django.http import HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
-from .read_stopword import stopword
+#from .read_stopword import stopword
 
 
 # index_schema = Schema(user = TEXT(stored=True),
@@ -234,11 +234,11 @@ def calculateRelevance(comments, query_terms) :
 	for i in comments :
 		tmp = 0
 		likes_list.append(i['likeCount'])
-		t = list(i['comment'].split(" "))
-		for word in t :
-			if word.lower() not in stopword :       #ignore stopwords
-				tmp += 1
-		collection_length = collection_length + tmp #len(list(i['comment'].split(" ")))
+		# t = list(i['comment'].split(" "))
+		# for word in t :
+		# 	if word.lower() not in stopword :       #ignore stopwords
+		# 		tmp += 1
+		collection_length = collection_length + len(list(i['comment'].split(" ")))
 
 	for term in query_terms :
 		doc_f = []
