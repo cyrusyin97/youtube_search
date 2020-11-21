@@ -305,7 +305,7 @@ def result(request) :
 #2. view.result中取得form的channel，comment字段值后附带query字段跳转到/index
 #3. view.result先判断是否有query参数
 #4. view.index判断是否有query参数
-#ddd
+
 
 
 
