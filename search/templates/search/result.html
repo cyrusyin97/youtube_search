@@ -1,0 +1,118 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Search YouTube</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'album.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'sort.js' %}"></script>
+  </head>
+  <body>
+
+<main role="main">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">{{ searchTerms }}</h1>
+      <p class="lead text-muted">{{ channel }}</p>
+      <form method="POST">
+      <div class="input-group mb-3">
+          {% csrf_token %}
+          <p type="text" name="query" class="form-control" aria-label="channel">
+          	<!-- <label>Enter channel you want to search</label> -->
+          	{{ form.channel }}
+          </p>
+      </div>
+      <div class="input-group mb-3">
+          <p type="text" name="query" class="form-control" aria-label="channel">
+          	<!-- <label>Enter comment you want to search</label> -->
+          	{{ form.comment }}
+          </p>
+      </div>
+      <!-- <div class="input-group mb-3">
+          <p type="text" name="query" class="form-control" aria-label="channel">
+          	<label>Sort By</label>
+          	{{ form.sort }}
+          </p>
+      </div> -->
+
+      <ul>
+        {% if sort == "default" %}
+        <li><input type="radio" name="sort" value ="default" onclick="sortBy(this)" checked>Default</li>
+        {% else %}
+        <li><input type="radio" name="sort" value ="default" onclick="sortBy(this)">Default</li>
+        {% endif %} 
+
+        {% if sort == "relevance" %}
+        <li><input type="radio" name="sort" value ="relevance" onclick="sortBy(this)" checked>Relevance</li>
+        {% else %}
+        <li><input type="radio" name="sort" value ="relevance" onclick="sortBy(this)">Relevance</li>
+        {% endif %} 
+
+        {% if sort == "like" %}
+        <li><input type="radio" name="sort" value="like" onclick="sortBy(this)" checked>Like</li>
+        {% else %}
+        <li><input type="radio" name="sort" value="like" onclick="sortBy(this)">Like</li>
+        {% endif %} 
+      </ul>
+
+      <!-- <select id = "sort" name = "sortlist" form = "sortform" onchange="sortBy(this);">
+        <option value ="default">Default</option>
+        <option value ="relevance">Relevance</option>
+        <option value="like">Like</option>
+      </select> -->
+
+      <p>
+        <button type="submit" name="submit" value="query" class="btn btn-primary my-2" >YouTube Search</button>
+      </p>
+      </form>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        {% for comment in comments %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <!-- <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{ comment.thumbnail }}" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail" 
+            href="https://www.youtube.com/watch?v={{comment.video}}"></img> -->
+            <div class="card-body">
+              <p class="card-text">{{ comment.comment }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" href="https://www.youtube.com/watch?v={{comment.video}}" class="btn btn-sm btn-outline-secondary" target="_blank">View</a>
+                </div>
+                <small class="text-muted">{{ comment.likeCount }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
