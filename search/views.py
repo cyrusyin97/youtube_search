@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_control, never_cache
 from django.http import HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
+from .read_stopword import stopword
 
 
 # index_schema = Schema(user = TEXT(stored=True),
@@ -27,9 +28,11 @@ from django.contrib.sessions.models import Session
 
 session_key = ''
 
+
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=False, no_store=True)
 def index(request) :
+	#print(stopword)
 
 	search_url = 'https://www.googleapis.com/youtube/v3/search'
 	video_url = 'https://www.googleapis.com/youtube/v3/videos'
@@ -229,8 +232,13 @@ def calculateRelevance(comments, query_terms) :
 	likes_list = []
 
 	for i in comments :
+		tmp = 0
 		likes_list.append(i['likeCount'])
-		collection_length = collection_length + len(list(i['comment'].split(" ")))
+		t = list(i['comment'].split(" "))
+		for word in t :
+			if word.lower() not in stopword :       #ignore stopwords
+				tmp += 1
+		collection_length = collection_length + tmp #len(list(i['comment'].split(" ")))
 
 	for term in query_terms :
 		doc_f = []
@@ -239,7 +247,7 @@ def calculateRelevance(comments, query_terms) :
 		for i in comments :
 			f = 0
 			for word in list(i['comment'].lower().split(" ")) :
-				if term.lower() in word :
+				if term.lower() in word:
 					tf = tf + 1
 					f = f + 1
 			doc_f.append(f / len(list(i['comment'].split(" "))))
