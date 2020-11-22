@@ -5,27 +5,20 @@ function sortBy(val) {
 
 	}
 
+
+
 window.onload = function() {
+	// var searchTerms = document.getElementById("searchTerms").textContent;
+	// console.log(searchTerms)
 
-	// var sortBy = document.getElementById('sort').addEventListener("")
+	// regStr = searchTerms.replace(/ /g, '|')
+	// console.log(regStr)
 
-	// var sortByDefault = document.getElementById('default').addEventListener("click", function() {
-	// 	var clink = "/result?" + "&sort=default";
-	// 	this.href = clink;
-	// });
+	// var match = new RegExp(regStr, "gi");
 
-	// var sortByRelevance = document.getElementById('relevance').addEventListener("click", function() {
-	// 	var clink = "/result?" + "&sort=relevance";
-	// 	this.href = clink;
-	// });
-
-	// var sortByLike = document.getElementById('like').addEventListener("click", function() {
-	// 	var clink = "/result?" + "&sort=like";
-	// 	this.href = clink;
-	// });
-	//let sort = document.getElementById('sort');
-	//sort.addEventListener('change', sortBy)
-
-	
+	// var comment = document.getElementsByClassName("card-text");
+	// for (var i = 0; i < comment.length; i++) {
+	// 	comment[i].innerHTML = comment[i].innerHTML.replace(match, (match) => `<mark>${match}</mark>`);
+	// }
 
 }

@@ -37,3 +37,11 @@ footer p {
   overflow-x: hidden;
   text-overflow: ellipsis;
 }
+
+.footer_container{
+align-items:center;
+
+  display: flex;
+
+  justify-content: space-between;
+}
