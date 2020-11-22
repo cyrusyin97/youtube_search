@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_control, never_cache
 from django.http import HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
+from django.core.paginator import Paginator
 #from .read_stopword import stopword
 
 
@@ -52,18 +53,18 @@ def index(request) :
 				'err_message' : err_message
 			}
 
-	if request.GET.get('channel', '') and request.GET.get('searchTerms', '') :
-		channel = request.GET['channel']
-		searchTerms = request.GET['searchTerms']
 
-
-	elif request.method == 'POST':
+	if request.method == 'POST':
 		form = SortMethod(request.POST)
 		if form.is_valid() :
 			
 			channel = form.cleaned_data['channel']
 			searchTerms = form.cleaned_data['comment']
 			sort = form.cleaned_data['sort']
+
+	elif request.GET.get('channel', '') and request.GET.get('searchTerms', '') :
+		channel = request.GET['channel']
+		searchTerms = request.GET['searchTerms']
 			
 	if channel != '' and searchTerms != '' :
 		getChannel_params = {
@@ -298,8 +299,12 @@ def result(request) :
 			return HttpResponseRedirect("/?" + "&channel=" + channel + "&searchTerms=" + searchTerms)
 
 
+	paginator = Paginator(comments, 9) # Show 9 contacts per page
+	page = request.GET.get('page')
+	comments_page = paginator.get_page(page)
+
 	context = {
-		'comments' : comments[:9],
+		'comments' : comments_page,#comments[:9],
 		'form' : form,
 		'sort' : sort,
 		'searchTerms' : searchTerms,
