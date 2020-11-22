@@ -112,6 +112,7 @@ def index(request) :
 
 		comment_results = r.json().get('items')
 		if comment_results == None :
+			print(r.json())
 			err_message = 'Network Problem!'
 			context = {
 				'comments' : [],
@@ -139,7 +140,8 @@ def index(request) :
 			comment_data = {
 					'comment' : comment['snippet']['topLevelComment']['snippet']['textDisplay'],
 					'video' : comment['snippet']['topLevelComment']['snippet'].get('videoId'),
-					'likeCount' : comment['snippet']['topLevelComment']['snippet']['likeCount']
+					'likeCount' : comment['snippet']['topLevelComment']['snippet']['likeCount'],
+					'avatar' : comment['snippet']['topLevelComment']['snippet']['authorProfileImageUrl']
 				}
 			# index_writer.add_document(user = comment['snippet']['topLevelComment']['snippet']['authorDisplayName'],
 			# 					likeCount = comment['snippet']['topLevelComment']['snippet']['likeCount'],
@@ -163,7 +165,8 @@ def index(request) :
 					comment_data = {
 						'comment' : comment['snippet']['topLevelComment']['snippet']['textDisplay'],
 						'video' : comment['snippet']['topLevelComment']['snippet'].get('videoId'),
-						'likeCount' : comment['snippet']['topLevelComment']['snippet']['likeCount']
+						'likeCount' : comment['snippet']['topLevelComment']['snippet']['likeCount'],
+						'avatar' : comment['snippet']['topLevelComment']['snippet']['authorProfileImageUrl']
 					}
 					# index_writer.add_document(user = comment['snippet']['topLevelComment']['snippet']['authorDisplayName'],
 					# 			likeCount = comment['snippet']['topLevelComment']['snippet']['likeCount'],
