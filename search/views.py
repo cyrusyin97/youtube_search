@@ -317,11 +317,6 @@ def result(request) :
 	return render(request, 'search/result.html', context)
 
 
-#1. result.html页面为drop down list绑定onClick事件，点击后附带sort参数链接到‘/result’
-#2. view.result中取得form的channel，comment字段值后附带query字段跳转到/index
-#3. view.result先判断是否有query参数
-#4. view.index判断是否有query参数
-
 
 
 
